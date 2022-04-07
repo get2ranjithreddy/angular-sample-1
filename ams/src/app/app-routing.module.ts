@@ -10,9 +10,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(
-    [{ path: 'addTimeSheet', component: AddtimesheetComponent },
-  { path: 'master', component: AddtimesheetComponent }])],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

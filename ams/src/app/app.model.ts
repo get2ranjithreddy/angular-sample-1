@@ -1,4 +1,8 @@
-export class Login{
-    Email:string="";
-    Password:string=""
+export class userTimesheet{
+    monday:string="";
+    tuesday:string="";
+    wednesday:string="";
+    thursday:string="";
+    friday:string="";
+  
 }
