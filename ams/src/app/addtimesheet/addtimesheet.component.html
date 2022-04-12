@@ -11,7 +11,7 @@
       <thead>
         <tr  >
           <th scope="col" > Day</th>
-          <th scope="col"  *ngFor="let column of weekData[0]">{{ column.Day}} <br>{{ column.Weekday}}</th>
+          <th scope="col"  *ngFor="let column of weekData[0]" title="{{column.Description}}" [style.color]="!column.IsWorkingDay?'blue':null">{{ column.Day}} <br>{{ column.Weekday}}</th>
           <th scope="col">Total Hours</th>
         </tr>
       </thead>
