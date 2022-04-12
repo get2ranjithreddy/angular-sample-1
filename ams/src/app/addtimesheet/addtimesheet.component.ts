@@ -139,7 +139,7 @@ export class AddtimesheetComponent implements  OnInit {
    
     timesheet.Employee = objEmployee;
     timesheet.EmployeeDayAttendanceEntries = this.arryEmployeeDayAttendanceEntries;
-    alert(JSON.stringify(timesheet));
+    // alert(JSON.stringify(timesheet));
     this.timeSheetService.submit(timesheet)
       .subscribe((response:any) => {
         this.timesheetForm.reset();
