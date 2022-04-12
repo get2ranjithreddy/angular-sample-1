@@ -7,12 +7,14 @@ import { MasterComponent } from './master/master.component';
 import { AddtimesheetComponent } from './addtimesheet/addtimesheet.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { CalenderComponent } from './calender/calender.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MasterComponent,
-    AddtimesheetComponent
+    AddtimesheetComponent,
+    CalenderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,83 @@
+/* The grid */
+.day-of-week,
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  box-sizing: border-box;
+}
+
+/* Styles for the weekday/weekend header */
+.day-of-week {
+  margin-top: 1.25em;
+}
+
+.day-of-week > * {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  font-variant: normal;
+  text-align: center;
+}
+
+/* For the month */
+.month-indicator {
+  color: #334e68;
+  text-align: center;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+.day {
+  border: 1px solid #334e68;
+  padding: 10px;
+  height: 160px;
+  font-size: medium;
+  font-weight: bold;
+  margin: -1px 0 0 -1px;
+}
+
+.calender-entry {
+  margin-top: 5px;
+  background-color: green;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.holiday {
+  width: 36px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: green;
+  color: white;
+  font-size: large;
+  /* border: 1px solid green; */
+}
+
+.holiday-heading {
+  color: green;
+}
+
+.heading {
+  padding-bottom: 5px;
+  font-size: medium;
+}
+
+.container {
+  margin-top: 10px;
+}
+
+#yearControl {
+  padding: 8px;
+  margin-right: 20px;
+  width: 100px;
+}
+
+#monthControl {
+  padding: 8px;
+  width: 200px;
+  margin-right: 20px;
+}
