@@ -6,21 +6,28 @@ import { AppComponent } from './app.component';
 import { MasterComponent } from './master/master.component';
 import { AddtimesheetComponent } from './addtimesheet/addtimesheet.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ViewtimesheetComponent } from './viewtimesheet/viewtimesheet.component';
+import { DataTablesModule } from 'angular-datatables';
+import { ManagerViewTimesheetComponent } from './manager-view-timesheet/manager-view-timesheet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MasterComponent,
-    AddtimesheetComponent
+    AddtimesheetComponent,
+    ViewtimesheetComponent,
+    ManagerViewTimesheetComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [DatePipe],
-  bootstrap: [MasterComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
