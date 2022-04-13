@@ -1,0 +1,50 @@
+<div class="container">
+  <select id="yearControl" (change)="onYearSelectionChange($event.target)">
+    <option value="default" disabled>Select</option>
+    <option value="{{year}}" *ngFor="let year of staticYears">
+      {{ year }}
+    </option>
+  </select>
+  <select id="monthControl" 
+    (change)="onMonthSelectionChange($event.target)"
+  >
+    <option value="default" disabled>Select</option>
+    <option value="{{month}}" *ngFor="let month of staticMonths">
+      {{ month }}
+    </option>
+  </select>
+  <button type="button" class="btn btn-default" (click)="onSubmitClick($event.target)" >Submit</button> &nbsp;
+</div>
+
+<div class="calendar">
+  <div class="month-indicator">{{requestedMonth}}</div>
+  <div class="day-of-week">
+    <div class="heading holiday-heading">SUNDAY</div>
+    <div class="heading">MONDAY</div>
+    <div class="heading">TUESDAY</div>
+    <div class="heading">WEDESDAY</div>
+    <div class="heading">THURSDAY</div>
+    <div class="heading">FRIDAY</div>
+    <div class="heading holiday-heading">SATURDAY</div>
+  </div>
+  <div class="date-grid">
+    <div class="day" *ngFor="let dummy of dummyDivs"></div>
+    <div class="day" *ngFor="let day of monthData">
+      <div id="{{ day.Id }}">
+        <div [ngClass]="{ holiday: !day.IsWorkingDay }">{{ day.LDay }}</div>
+        <div
+          class="calender-entry"
+          *ngIf="
+            day.Description.length > 0 &&
+            !(
+              day.Weekday.toUpperCase() == 'SUNDAY' ||
+              day.Weekday.toUpperCase() == 'SATURDAY'
+            )
+          "
+        >
+          {{ day.Description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
