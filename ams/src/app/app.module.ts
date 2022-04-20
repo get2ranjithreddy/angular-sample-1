@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MasterComponent } from './master/master.component';
@@ -11,6 +11,8 @@ import { ViewtimesheetComponent } from './viewtimesheet/viewtimesheet.component'
 import { DataTablesModule } from 'angular-datatables';
 import { ManagerViewTimesheetComponent } from './manager-view-timesheet/manager-view-timesheet.component'; 
 import { CalenderComponent } from './calender/calender.component';
+import { HolidayComponent } from './holiday/holiday.component';
+
 
 @NgModule({
   declarations: [
@@ -19,9 +21,11 @@ import { CalenderComponent } from './calender/calender.component';
     AddtimesheetComponent,
     ViewtimesheetComponent,
     ManagerViewTimesheetComponent,
-    CalenderComponent
+    CalenderComponent,
+    HolidayComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     CommonModule,
     AppRoutingModule,

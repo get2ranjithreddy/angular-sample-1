@@ -9,7 +9,7 @@ export class TimesheetService {
   currentDateTime: any;
   StartDate: any;
   EndDate: any;
-  private url = 'http://10.26.238.161/AttendenceMgmt/';
+  private url = 'http://10.189.129.239/AttendenceMgmt/';
 
   constructor(private httpClient: HttpClient, private datepipe: DatePipe) {
     this.currentDateTime = this.datepipe.transform((new Date), 'MM-dd-yyyy');
@@ -26,14 +26,14 @@ export class TimesheetService {
    getEmployeeDeatils(username:string,password:string)
    {
      const params = new HttpParams()
-       .set('email', username)
-       .set('password', password);
-      return this.httpClient.post(`${this.url}api/Employee/GetEmployeByEmailNPassword`, params)
+       .set('Email', username)
+       .set('Password', password);
+      return this.httpClient.post(`${this.url}api/User/GetUserByEmailNPassword`, params)
    }
 
-  getCurrentWeekData()
+  getCurrentWeekData(employeeId:string)
   {
-    return this.httpClient.get(`${this.url}api/Calender/GetWeekInfoForSelectedDate/${this.currentDateTime}`);
+    return this.httpClient.get(`${this.url}api/EmployeeAttendance/GetWeekInfoForSelectedDate/${employeeId}/${this.currentDateTime}`);
   }
 
   submit(post:any){

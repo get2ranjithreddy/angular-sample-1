@@ -1,0 +1,67 @@
+<div>
+    <h2> Holiday Calender</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <h4>Select Year </h4>
+        </div>
+        <div class="col-md-3 ">
+            <select (change)="onYearChange($event.target)" class="form-control">
+                <option value="default" disabled>Select</option>
+                <option [value]="year" *ngFor="let year of staticYears">
+                    {{ year }}
+                </option>
+            </select>
+
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <table class="table table-bordered" *ngIf="viewTableShow">
+        <thead>
+            <tr>
+                <th scope="col">CHECK</th>
+                <th scope="col">DATE</th>
+                <th scope="col">DESCRIPTION</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let holiday of viewholidayList">
+                <td><input type="checkbox" class="col-sm-6" disabled></td>
+                <td> {{holiday.Date | date :"MM-dd-yyyy"}}</td>
+                <td>{{holiday.Description}}</td>
+            </tr>
+            <tr *ngIf="viewholidayList.length==0"><h5> No Records Found</h5></tr>
+
+        </tbody>
+    </table>
+    <form #holidayForm="ngForm" (ngSubmit)="onSubmit(holidayForm)">
+
+        <table class="table table-bordered" *ngIf="addTableShow">
+            <thead>
+                <tr>
+                    <th scope="col" style="display:none">Id</th>
+                    <th scope="col">CHECK</th>
+                    <th scope="col">SELECT DATE</th>
+                    <th scope="col">DESCRIPTION</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let holiday of addHolidayList;let i=index">
+                    <td style="display:none"><input type="text" class="col-sm-6"
+                            [disabled]="addHolidayList[i].IsDescDisabled" [(ngModel)]="holiday.Id" name="Id-{{i}}"
+                            #name="ngModel"></td>
+                    <td><input type="checkbox" class="col-sm-6" (change)="onCheckBoxChange($event,i,holiday.Id)"></td>
+                    <td> <input type="date" class="col-sm-6" [disabled]="addHolidayList[i].IsDateDisabled"
+                            [(ngModel)]="holiday.Date" name="Date-{{i}}" #name="ngModel"></td>
+                    <td><input type="text" class="col-sm-6" [disabled]="addHolidayList[i].IsDescDisabled"
+                            [(ngModel)]="holiday.Description" name="description-{{i}}" #name="ngModel"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary" *ngIf="addTableShow">Submit</button>
+    </form>
+</div>

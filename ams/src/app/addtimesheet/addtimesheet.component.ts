@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common'
 import { userTimesheet } from '../app.model';
@@ -6,8 +6,6 @@ import { TimesheetService } from '../services/timesheet.service';
 import { Router } from '@angular/router';
 import { Timesheet } from './timesheet.model';
 import { Employee } from './employee.mode';
-import { EmployeeDayAttendanceEntries } from './employeedayattendanceentries.mode';
-
 
 @Component({
   selector: 'app-addtimesheet',
@@ -22,6 +20,7 @@ export class AddtimesheetComponent implements  OnInit {
   options: string[];
   arryEmployeeDayAttendanceEntries:any=[];
   IsDisabled:boolean=true;
+  employeeId:string="";
   constructor(
     public fb: FormBuilder,
     private timeSheetService:TimesheetService,
@@ -49,10 +48,10 @@ export class AddtimesheetComponent implements  OnInit {
 
 
   ngOnInit(): void {
-     this.getCurrentWeekData();
     this.getEmployeeDeatils();
-   
-  }
+    this.getCurrentWeekData();
+    
+    }
 
 
 
@@ -84,20 +83,25 @@ export class AddtimesheetComponent implements  OnInit {
 
   getEmployeeDeatils()
   {
-    let username= "RobbHaley.Denesik@hotmail.com";
-    let password = "X*Goer%v3US3qTs3";
+    let username= "DudleyMacejkovic_Bernhard@gmail.com";
+    let password = "quoieauuie";
     this.timeSheetService.getEmployeeDeatils(username,password)
     .subscribe((response:any) => {
+      if(response != null)
+      {
+
       this.employee.Id = response.Id;
       this.employee.Name = response.Name;
       this.employee.Email = response.Email;
       console.log(this.employee);
+      }
      
     });
   }
 
   getCurrentWeekData() {
-    this.timeSheetService.getCurrentWeekData()
+    this.employeeId = "8701b3ab-2d69-4d84-a437-e9ef6157ecc1";
+    this.timeSheetService.getCurrentWeekData(this.employeeId)
       .subscribe((response:any) => {
        console.log("WeekData",response);
         this.weekData.push(response);
@@ -119,12 +123,7 @@ export class AddtimesheetComponent implements  OnInit {
 
     this.timesheetData = this.timesheetForm.value;
     var timesheet = new Timesheet();
-    var objEmployee =
-    {
-      Id: this.employee.Id,
-      Email: this.employee.Email,
-      Name: this.employee.Name
-    };
+    
     for (var i = 0; i < this.weekData[0].length; i++) {
       let date = this.datepipe.transform(this.weekData[0][i].Date, 'MM-dd-yyyy')
       var objEmployeeDayAttendanceEntries =
@@ -137,21 +136,24 @@ export class AddtimesheetComponent implements  OnInit {
 
     }
    
-    timesheet.Employee = objEmployee;
-    timesheet.EmployeeDayAttendanceEntries = this.arryEmployeeDayAttendanceEntries;
-    // alert(JSON.stringify(timesheet));
+    timesheet.EmployeeId = this.employee.Id;
+    timesheet.WeekAttendance = this.arryEmployeeDayAttendanceEntries;
+    console.log(JSON.stringify(timesheet));
+    alert(JSON.stringify(timesheet));
     this.timeSheetService.submit(timesheet)
       .subscribe((response:any) => {
+        alert(response)
         this.timesheetForm.reset();
         alert("Timesheet Added Sucessfully");
-        this.router.navigateByUrl('addTimeSheet');
+        this.router.navigate(['/addTimeSheet']);
+      
       });
   }
 
   cancel()
   {
     this.timesheetForm.reset();
-    this.router.navigateByUrl('addTimeSheet');
+    this.router.navigate(['/addTimeSheet']);
   }
 }
 
