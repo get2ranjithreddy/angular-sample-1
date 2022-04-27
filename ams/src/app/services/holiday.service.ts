@@ -13,6 +13,6 @@ export class HolidayService {
   }
 
   submit(post:any){
-    return this.httpClient.post(`${this.url}api/EmployeeAttendance/`, post);
+    return this.httpClient.post(`${this.url}api/Calender/UpdateYearEntries`, post);
 }
 }

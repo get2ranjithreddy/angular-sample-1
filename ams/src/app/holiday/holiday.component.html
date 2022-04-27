@@ -16,7 +16,10 @@
     </div>
     <br />
     <br />
-
+    <div class="alert alert-danger alert-dismissible" *ngIf="showErrorMessage">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Alert!</strong>  {{errMessage}}
+      </div>
     <table class="table table-bordered" *ngIf="viewTableShow">
         <thead>
             <tr>
@@ -53,15 +56,21 @@
                     <td style="display:none"><input type="text" class="col-sm-6"
                             [disabled]="addHolidayList[i].IsDescDisabled" [(ngModel)]="holiday.Id" name="Id-{{i}}"
                             #name="ngModel"></td>
-                    <td><input type="checkbox" class="col-sm-6" (change)="onCheckBoxChange($event,i,holiday.Id)"></td>
-                    <td> <input type="date" class="col-sm-6" [disabled]="addHolidayList[i].IsDateDisabled"
-                            [(ngModel)]="holiday.Date" name="Date-{{i}}" #name="ngModel"></td>
-                    <td><input type="text" class="col-sm-6" [disabled]="addHolidayList[i].IsDescDisabled"
-                            [(ngModel)]="holiday.Description" name="description-{{i}}" #name="ngModel"></td>
+                    <td><input type="checkbox" class="col-sm-6" [checked]="addHolidayList[i].IsChecked" (change)="onCheckBoxChange($event,i,holiday.Id)"></td>
+                    <td> <input type="date" class="col-sm-6"  [min]="addHolidayList[i].minYear" [max]="addHolidayList[i].maxYear"  
+                            [(ngModel)]="holiday.Date" name="Date-{{i}}" #name="ngModel" (change)="onDateChange($event,i)"></td>
+                    <td><input type="text" class="col-sm-6" required 
+                            [(ngModel)]="holiday.Description" name="description-{{i}}" #name="ngModel" (change)="onDescriptionChange($event,i)">
+                            <div *ngIf="holidayForm.submitted && addHolidayList[i].IsChecked &&  holiday.Description==''" class="text-danger text-left">
+                                <small>Description is required.</small>
+                            </div>
+                           
+                        </td>
                 </tr>
             </tbody>
         </table>
-
-        <button type="submit" class="btn btn-primary" *ngIf="addTableShow">Submit</button>
+<div>
+        <button type="submit" class="btn btn-primary" *ngIf="addTableShow" >Submit</button>
+    </div>
     </form>
 </div>
