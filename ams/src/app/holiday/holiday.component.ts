@@ -54,7 +54,6 @@ export class HolidayComponent implements OnInit {
   }
 
   onYearChange(val: any) {
-
     this.showErrorMessage = false;
     var date = new Date();
     var currentyear = date.getFullYear();
@@ -240,13 +239,14 @@ export class HolidayComponent implements OnInit {
     });
     // alert(JSON.stringify(this.finalMergedArray));
     // console.log(this.finalMergedArray);
-    if (this.finalMergedArray.length > 0) {
+    if (this.finalMergedArray.length > 0 && this.showErrorMessage == false) {
       this.holidayService.submit(this.finalMergedArray)
         .subscribe((response: any) => {
           if(response == true)
           {
           alert('Holidays updated sucessfully');
-          this.router.navigate(['/holiday']);
+          //form.reset();
+          //this.router.navigate(['/holiday']);
           }
         });
     }
