@@ -5,16 +5,21 @@ import { ManagerViewTimesheetComponent } from './manager-view-timesheet/manager-
 import { CalenderComponent } from './calender/calender.component';
 import { MasterComponent } from './master/master.component';
 import { ViewtimesheetComponent } from './viewtimesheet/viewtimesheet.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './_helpers/auth.guard';
+import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
+ 
 
 const routes: Routes = [
-  { path: 'calender', component: CalenderComponent },
-  { path: 'addTimeSheet', component: AddtimesheetComponent },
-  { path: 'master', component: MasterComponent },
-  { path: 'viewTimeSheet', component: ViewtimesheetComponent },
-  { path: 'managerviewTimeSheet', component: ManagerViewTimesheetComponent },
-  { path: 'holiday', component: HolidayComponent },
-  { path: '**', redirectTo: 'master' }
+  { path: 'calender', component: CalenderComponent , canActivate : [AuthGuard]},
+  { path: 'addTimeSheet', component: AddtimesheetComponent , canActivate : [AuthGuard]},
+  { path: 'holiday', component: HolidayComponent  },
+  { path: 'viewTimeSheet', component: ViewtimesheetComponent , canActivate : [AuthGuard]},
+  { path: 'managerviewTimeSheet', component: ManagerViewTimesheetComponent, canActivate : [AuthGuard]},
+  { path: 'login', component: LoginComponent  },
+  { path: 'logout', component: LogoutComponent  },
+  { path: '**', redirectTo: 'login' }
 ];
 
 

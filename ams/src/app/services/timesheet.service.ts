@@ -14,7 +14,6 @@ export class TimesheetService {
   constructor(private httpClient: HttpClient, private datepipe: DatePipe) {
     this.currentDateTime = this.datepipe.transform((new Date), 'MM-dd-yyyy');
   }
-
   
   getGetEmployeeAttendanceSummary(id: string, startDate: string, endDate: string) {     
     this.StartDate = this.datepipe.transform((startDate), 'MM-dd-yyyy');
@@ -35,8 +34,19 @@ export class TimesheetService {
   {
     return this.httpClient.get(`${this.url}api/EmployeeAttendance/GetWeekInfoForSelectedDate/${employeeId}/${this.currentDateTime}`);
   }
-
   submit(post:any){
       return this.httpClient.post(`${this.url}api/EmployeeAttendance/UpdateEmployeeAttendance`, post);
+  }
+
+  getAllEmployeesForManager(id: string) {
+    const params = new HttpParams()
+      .set('id', id)
+    return this.httpClient.post(`${this.url}api/User/GetAllEmployeesForAManager`, params)
+  }
+  getEmployeeAttendanceDataByEmployeeID(id: string) {
+    return this.httpClient.get(`${this.url}api/EmployeeAttendance/GetEmployeeAttendanceForApproval/${id}/${this.currentDateTime}`);
+  }
+  UpdateEmployeeAttendanceStatus(empAttendanceobj : any) {   
+      return this.httpClient.get(`${this.url}api/EmployeeAttendance/ApproveOrRejectEmployeeAttendance/${empAttendanceobj.employeeId}/${empAttendanceobj.year}/${empAttendanceobj.weekNumber}/${empAttendanceobj.status}`); 
   }
 }

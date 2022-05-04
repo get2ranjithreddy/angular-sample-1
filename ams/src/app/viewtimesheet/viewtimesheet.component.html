@@ -5,19 +5,18 @@ $(document).ready(function() {
   } );
   new $.fn.dataTable.FixedHeader( table );
 } ); -->
- <!-- </script> -->
+<!-- </script> -->
 <form [formGroup]="fg" novalidate (ngSubmit)="onSubmit()">
   <label for="period" style="margin-left:10px;"> Period: </label>
   <br />
   <input formControlName="dateFrom" type="date" useValueAsDate style="margin-left:10px;" />
   <input formControlName="dateTo" type="date" useValueAsDate style="margin-left:5px;margin-right:5px;" />
-  <!--<button [disabled]="form.pristine || form.invalid" type="submit">Submit</button>-->
 
   <button type="submit" style="margin-left:10px;" class="btn btn-primary" [disabled]="fg.invalid">Submit</button>
   <label *ngIf="fg.errors">{{ fg.errors?.dates | json }}</label>
- 
+
 </form>
- 
+
 <!-- <form >
     <label for="birthday" style="margin-left:10px;"> Period: </label>
     <br/>
@@ -30,22 +29,25 @@ $(document).ready(function() {
 
 <div class="container">
   <h2>Timesheet</h2>
-  <table id="exampleTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table-striped table-bordered nowrap">
-   <thead> 
-      <tr>         
+  <table id="exampleTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="row-border hover table-striped table-bordered nowrap">
+    <thead>
+      <tr>
         <th>Week Number</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Total Working Hours</th>
+        <th>Year</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody *ngIf="timesheetData?.length != 0">
       <tr *ngFor="let timesheet of timesheetData">
         <td> {{ timesheet.WeekNumber }} </td>
-        <td> {{ timesheet.StartDate | date: 'MM/dd/yyyy' }} </td>      
+        <td> {{ timesheet.StartDate | date: 'MM/dd/yyyy' }} </td>
         <td> {{ timesheet.EndDate | date: 'MM/dd/yyyy' }} </td>
         <td> {{ timesheet.TotalWorkingHours }} </td>
+        <td>{{ timesheet.Year}} </td>
         <td> Approved </td>
       </tr>
     </tbody>
@@ -53,7 +55,7 @@ $(document).ready(function() {
       <tr>
         <td colspan="3" class="no-data-available" style="text-align:center;">No matching records found</td>
       </tr>
-      </tbody>
+    </tbody>
 
   </table>
 </div>

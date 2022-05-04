@@ -33,9 +33,7 @@ export class HolidayComponent implements OnInit {
 
   constructor(public fb: FormBuilder, private holidayService: HolidayService, public datepipe: DatePipe,
     private router: Router) {
-
   }
-
 
   ngOnInit(): void {
     var d = new Date();

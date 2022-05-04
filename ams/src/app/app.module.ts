@@ -11,8 +11,10 @@ import { ViewtimesheetComponent } from './viewtimesheet/viewtimesheet.component'
 import { DataTablesModule } from 'angular-datatables';
 import { ManagerViewTimesheetComponent } from './manager-view-timesheet/manager-view-timesheet.component'; 
 import { CalenderComponent } from './calender/calender.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
-
+ 
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { HolidayComponent } from './holiday/holiday.component';
     ViewtimesheetComponent,
     ManagerViewTimesheetComponent,
     CalenderComponent,
+    LoginComponent,
+    LogoutComponent,
     HolidayComponent
   ],
   imports: [

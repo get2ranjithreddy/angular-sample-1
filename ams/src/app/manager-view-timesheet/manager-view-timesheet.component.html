@@ -1,54 +1,59 @@
- 
- <div class="container">   
-<div class="dropdown">
-  <select name="demo" id="#" class="btn btn-default dropdown-toggle">
-    <option selected="selected" value="select">Select Employee</option>
-    <option value="one">Sherman Stoltenberg</option>
-    <option value="two">Iva Glover</option>
-  </select>  
-</div>
-<br/> 
-  <table datatable [dtOptions]="dtOptions" class="row-border hover table-striped table-bordered">
-    <thead>
-      <tr>
-        <th>Week </th>
-        <th>Suday</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td> 17th july to 22nd july </td>
-        <td> 0 </td>
-        <td> 4 </td>
-        <td> 8 </td>
-        <td> 8 </td>
-        <td>8</td>
-        <td>4</td>
-        <td>0</td>
-        <td> <button type="submit" style="margin-left:10px;" class="btn btn-success btn-sm">Approve</button>&nbsp;&nbsp;
-          <button type="submit" style="margin-left:10px;" class="btn btn-danger btn-sm">Reject</button>
-        </td>
-      </tr>
-      <tr>
-        <td> 17th july to 22nd july </td>
-        <td> 0 </td>
-        <td> 4 </td>
-        <td> 8 </td>
-        <td> 8 </td>
-        <td>8</td>
-        <td>4</td>
-        <td>0</td>
-        <td> <button type="submit" style="margin-left:10px;" class="btn btn-success btn-sm">Approve</button>&nbsp;&nbsp;
-          <button type="submit" style="margin-left:10px;" class="btn btn-danger btn-sm">Reject</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+  <form [formGroup]="fg">
+    <div class="dropdown"> 
+    <label for="period"> Select Employee: </label>&nbsp;&nbsp;
+    
+      <select formControlName="selectEmployee" class="btn btn-default dropdown-toggle" (change)="selectEmployee($event)">
+        <option value="">-- Select Employee --</option>
+        <option *ngFor="let employee of Employees" [value]="employee.Id">{{employee.Name}}</option>
+      </select>
+    </div>
+    <br />
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+      class="row-border hover table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Week </th>
+          <th>Suday</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Total Hours</th>
+          <th>Year</th>
+          <th>Week Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of Employeeattendacedata[0]">
+          <td>{{emp.WeekAttendance[0].Day}} to {{emp.WeekAttendance[6].Day }}</td>
+          <td> {{emp.WeekAttendance[0].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[1].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[2].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[3].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[4].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[5].WorkingHours}} </td>
+          <td> {{emp.WeekAttendance[6].WorkingHours}} </td>
+          <td> {{emp.TotalWorkingHours}} </td>
+          <td> {{emp.Year}} </td>
+          <td> {{emp.WeekNumber}} </td>
+          <td> <button (click)="onSelect(emp)" style="border:none;background:none;margin-left: -8px"> <i
+                class="fa fa-check-circle" style="font-size:25px;color:green"></i> </button>
+
+            <button (click)="onReject(emp)" style="border:none;background:none;" > <i class="fa fa-times-circle"
+                style="font-size:25px;color:red;"></i></button>
+          </td>
+        </tr>
+      </tbody>
+      <!-- <tbody *ngIf="Employeeattendacedata[0]?.length == 0">
+        <tr>
+          <td colspan="3" class="no-data-available" style="text-align:center;">No matching records found</td>
+        </tr>
+        </tbody> -->
+    </table>
+  </form>
 </div>

@@ -4,7 +4,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TimesheetService } from '../services/timesheet.service';
-
 import { Subject } from 'rxjs';
 
 import {
@@ -14,8 +13,8 @@ import {
   ValidatorFn,
   AbstractControl
 } from "@angular/forms";
-import { DataTableDirective } from 'angular-datatables';
-import { EmployeeAttendanceWeekSummary } from './EmployeeAttendanceWeekSummaryEntries.Model';
+import { DataTableDirective } from 'angular-datatables'; 
+import { EmployeeWeekAttendances } from './EmployeeWeekAttendances.model';
 
 declare var $: any;
 
@@ -31,12 +30,11 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   fg: FormGroup;
-  fromdate: string = "";
-  this: any;
+  fromdate: string = "";   
   // datePipeString: any;
   data: any = [];
   todate: string = "";
-  timesheetData: EmployeeAttendanceWeekSummary[] = [];
+  timesheetData:  any[] = [];
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private timeSheetService: TimesheetService) {
     this.fg = this.fb.group({
       dateTo: ['', Validators.required],
@@ -59,63 +57,16 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
     }
   }
 
-  ngOnInit(): void {
-   
-    // this.dtOptions = {
-    //   ajax: 'data/data.json',
-    //   columns: [{
-    //     title: 'Week Number',
-    //     data: 'WeekNumberd'
-    //   }, {
-    //     title: 'Start Date',
-    //     data: 'StartDate'
-    //   }, {
-    //     title: 'End Date',
-    //     data: 'EndDate'
-    //   },
-    //   {
-    //     title: 'Total WorkingHours',
-    //     data: 'TotalWorkingHours'
-    //   },
-    //   {
-    //     title: 'Status',
-    //     data: 'EndDate'
-    //   }]
-    // };
+  ngOnInit(): void {  
     var myCurrentDate = new Date();
     var myPastDate = new Date(myCurrentDate);
     myPastDate.setDate(myPastDate.getDate() - 15);
     this.GetEmployeeAttendanceSummary(myPastDate.toString(), myCurrentDate.toString());
   }
 
-  onSubmit() {     
-    // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-    //   // Destroy the table first
-    //   dtInstance.destroy();
-    //   // Call the dtTrigger to rerender again
-    //   this.dtTrigger.next(0);
-    // });
-    this.GetEmployeeAttendanceSummary(this.fromdate, this.todate);
-    // this.data = this.data.filter((item: any) => {
-    //   debugger;
-    //   let endDate = new Date(item.endDate);
-    //   var fromdate = new Date(this.fromdate);
-    //   let todate = new Date(this.todate);
-    //   return endDate >= fromdate && endDate <= todate
-    // })
-  }
-  private dateRangeValidator: ValidatorFn = (): {
-    [key: string]: any;
-  } | null => {
-    let invalid = false;
-    debugger;
-    const from = this.fg.value.from;
-    const to = this.fg.value.to;
-    if (from && to) {
-      invalid = new Date(from).valueOf() > new Date(to).valueOf();
-    }
-    return invalid ? { invalidRange: { from, to } } : null;
-  };
+  onSubmit() {        
+    this.GetEmployeeAttendanceSummary(this.fromdate, this.todate);   
+  } 
 
   GetEmployeeAttendanceSummary(myCurrentDate: String, myPastDate: String) {      
     this.dtOptions = {};
@@ -125,11 +76,11 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
       pageLength: 5
     };
     this.data = [];
-    this.timeSheetService.getGetEmployeeAttendanceSummary("d434401b-9912-419b-9c87-f2dc8f54049d", myCurrentDate.toString(), myPastDate.toString())
-      .subscribe((response: any) => {         
-        // console.log(response);
-        this.data.push(response);        
-        this.timesheetData = this.data[0].EmployeeAttendanceWeekSummaryEntries;
+    this.timeSheetService.getGetEmployeeAttendanceSummary("be971494-5677-4960-ac59-fa3acb1aa662", myCurrentDate.toString(), myPastDate.toString())
+      .subscribe((response: any) => {  
+        this.data.push(response);    
+        console.log(this.data);   
+        this.timesheetData = this.data[0].EmployeeWeekAttendances;
         this.dtTrigger.next(0);
         if(this.timesheetData.length == 0)
         {        
@@ -142,11 +93,7 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
         }
       });
   }
-  // ngAfterViewInit(): void {
-  //   this.dtTrigger.next(0);
-  // }
-   
-
+ 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

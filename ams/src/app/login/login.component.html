@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div> 
+        <div class="col-md-1"></div> 
+        <div class="col-md-5 offset-md-3">
+            <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+
+                <h3>Attendance Management System</h3><hr>
+                <div class="form-group">
+                    <label for="email"><b>Email</b></label>
+                    <!-- <input type="text" formControlName="email" placeholder="Enter Email" name="email" id="email" required> -->
+
+                    <input type="text" formControlName="email" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <small class="text-danger" *ngIf="f.email.errors.required">Email is required</small>
+                        <small class="text-danger" *ngIf="f.email.errors.email">Email must be a valid email
+                            address</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="psw"><b>Password</b></label>
+                    <!-- <input type="password" formControlName="password" placeholder="Enter Password" name="psw" id="psw" required> -->
+                    <input type="password" formControlName="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <small class="text-danger" *ngIf="f.password.errors.required">Password is required</small>
+                        <small class="text-danger" *ngIf="f.password.errors.minlength">Password must be at least 6
+                            characters</small>
+                    </div>
+                </div>
+
+                <div class="form-group checkbox">
+                 <b> Role : </b>  <select formControlName="selectRole" (change)="onChange($event)">
+                        <option value="">-- Select --</option>
+                      <option [value]="option" *ngFor="let option of options" >{{option}}</option>
+                    </select>
+                    <!-- <label for="isManager" class="form-check-label" style="font-weight:bold">  
+                         <input type="checkbox" formControlName="isManager" id="isManager" class="form-check-input" />
+                    IsManager</label> -->
+                </div>
+                <!-- <label>
+                    <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
+                    <input type="checkbox" name="isManager" formControlName="isManager">Is Manager?
+                </label> -->
+                <button [disabled]="loginForm.invalid" class="btn btn-primary">Sign In</button>   
+            </form>
+        </div>
+    </div>
+</div>
