@@ -14,7 +14,8 @@ import { CalenderComponent } from './calender/calender.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
- 
+import { ChartComponent } from './chart/chart.component'
+import { NgChartsModule } from 'ng2-charts'; 
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HolidayComponent } from './holiday/holiday.component';
     CalenderComponent,
     LoginComponent,
     LogoutComponent,
-    HolidayComponent
+    HolidayComponent,
+    ChartComponent
   ],
   imports: [
     FormsModule,
@@ -35,7 +37,8 @@ import { HolidayComponent } from './holiday/holiday.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    NgChartsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

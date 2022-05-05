@@ -1,0 +1,34 @@
+<h3>Timesheet Quantity </h3>
+<div class="row" style="margin-bottom: 5%; margin-top: 2%;">
+    <div class="col-md-12">
+         <div class="col-md-3"><label>From</label> &nbsp;<input type="date" [(ngModel)]="FromDate"></div>
+        <div class="col-md-2"><label>To</label> &nbsp; <input type="date" [(ngModel)]="ToDate"></div>
+        <button type="button" class="btn btn-primary" (click)="Submit()">Submit</button> &nbsp;
+      </div>
+    </div>
+
+    <div class="card mt-2">
+      <div class="card-body" id="barchart" *ngIf="showChart">
+        <h4 class="card-title">Bar Chart</h4>
+        <h3 *ngIf="showNoDataAvailable">No Data Available</h3>
+        <canvas 
+          baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+        >
+        </canvas>
+      </div>
+<!-- <h4>Pie Chart</h4>
+      <div >
+        <canvas baseChart 
+          [data]="pieChartData" 
+          [labels]="pieChartLabels" 
+        
+          [options]="pieChartOptions"
+          [plugins]="pieChartPlugins"
+          [legend]="pieChartLegend">
+        </canvas>
+      </div> -->

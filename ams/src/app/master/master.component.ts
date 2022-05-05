@@ -8,11 +8,14 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class MasterComponent implements OnInit {
   isLoggedIn: boolean = false;
-
+  isShowClass:boolean=false;
   constructor(private authService : AuthenticationService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn;
+  }
+  addClass() {
+    this.isShowClass = true;
   }
 
 }

@@ -100,7 +100,7 @@ export class AddtimesheetComponent implements  OnInit {
   }
 
   getCurrentWeekData() {
-    this.employeeId = "8701b3ab-2d69-4d84-a437-e9ef6157ecc1";
+    this.employeeId = "1fcb0468-133f-45b0-ab7b-da3fa0340296";
     this.timeSheetService.getCurrentWeekData(this.employeeId)
       .subscribe((response:any) => {
        console.log("WeekData",response);
@@ -139,10 +139,10 @@ export class AddtimesheetComponent implements  OnInit {
     timesheet.EmployeeId = this.employee.Id;
     timesheet.WeekAttendance = this.arryEmployeeDayAttendanceEntries;
     console.log(JSON.stringify(timesheet));
-    alert(JSON.stringify(timesheet));
+    //alert(JSON.stringify(timesheet));
     this.timeSheetService.submit(timesheet)
       .subscribe((response:any) => {
-        alert(response)
+        //alert(response)
         this.timesheetForm.reset();
         alert("Timesheet Added Sucessfully");
         this.router.navigate(['/addTimeSheet']);

@@ -12,12 +12,13 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav" >
-          <li class="active" routerLink="master" [routerLinkActive]="'active'"><a>Home</a></li>
-          <li><a routerLink="/addTimeSheet">Timesheet</a></li>
-          <li><a routerLink="/viewTimeSheet" [routerLinkActive]="'active'">View Timesheet</a></li>
-          <li><a routerLink="/managerviewTimeSheet">Manager View</a></li>
-          <li><a routerLink="/calender">Calender</a></li>
-          <li><a routerLink="/holiday">Holiday</a></li>
+          <li><a routerLink="master" [class.active]="isShowClass" (click)="addClass()">Home</a></li>
+          <li><a routerLink="/addTimeSheet" [class.active]="isShowClass" (click)="addClass()">Timesheet</a></li>
+          <li><a routerLink="/viewTimeSheet" [class.active]="isShowClass" (click)="addClass()">View Timesheet</a></li>
+          <li><a routerLink="/managerviewTimeSheet" [class.active]="isShowClass" (click)="addClass()">Manager View</a></li>
+          <li><a routerLink="/calender" [class.active]="isShowClass" (click)="addClass()">Calender</a></li>
+          <li><a routerLink="/holiday" [class.active]="isShowClass" (click)="addClass()">Holiday</a></li>
+          <li><a routerLink="/chart" [class.active]="isShowClass" (click)="addClass()">Charts</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
          
