@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { TimesheetService } from '../services/timesheet.service';
 import { Employee } from './Employee.Model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-manager-view-timesheet',
   templateUrl: './manager-view-timesheet.component.html',
@@ -11,34 +10,33 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class ManagerViewTimesheetComponent implements OnInit {
   timesheetData: any = [];
-  selectedDevice: any = "";
+  selectedDevice: any = null;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   Employees: Employee[] = [];
   data: any = [];
-  employeeId: string = "8701b3ab-2d69-4d84-a437-e9ef6157ecc1";
+  employeeId: string = '';
   Employeeattendacedata: any[] = [];
   fg: FormGroup;
-  constructor(private timeSheetService: TimesheetService , private fb : FormBuilder) { 
-
-    this.fg = this.fb.group({       
-      selectEmployee:  ['', Validators.required]
-      });
+  constructor(private timeSheetService: TimesheetService, private fb: FormBuilder) {
+    this.fg = this.fb.group({
+      selectEmployee: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
-    this.getAllEmployeesList();
-    this.getEmployeeAttendanceData();
+    var UserId = localStorage.getItem("Id");
+    this.getAllEmployeesList(UserId);
+    $('#exampleTable').hide();
   }
-  // form = new FormGroup({
-  //   website: new FormControl(['', Validators.required])
-  // });
 
   get f() {
     return this.fg.controls;
   }
   selectEmployee(e: any) {
-    //this.employeeId = e.target.value;
+    this.employeeId = e.target.value;
+    $('#exampleTable').show();
+    this.getEmployeeAttendanceData(this.employeeId);
     console.log(e.target.value);
   }
   onSelect(selectedItem: any) {
@@ -50,10 +48,9 @@ export class ManagerViewTimesheetComponent implements OnInit {
     };
     this.timeSheetService.UpdateEmployeeAttendanceStatus(objEmployeeAttendanceStatus)
       .subscribe((response: any) => {
-        // console.log("Approved : " + response);
         alert("Status Updated Successfully");
       });
-      this.getEmployeeAttendanceData();
+    this.getEmployeeAttendanceData(this.employeeId);
   }
 
   onReject(selectedItem: any) {
@@ -64,28 +61,38 @@ export class ManagerViewTimesheetComponent implements OnInit {
       status: false
     };
     this.timeSheetService.UpdateEmployeeAttendanceStatus(objEmployeeAttendanceStatus)
-      .subscribe((response: any) => {         
-          console.log("Approved : " + response);
-         alert("Status Rejected Successfully"); 
-         this.getEmployeeAttendanceData();        
+      .subscribe((response: any) => {
+        console.log("Approved : " + response);
+        alert("Status Rejected Successfully");
       });
-      
+    this.getEmployeeAttendanceData(this.employeeId);
     // console.log("Selected item Id: ", selectedItem.WeekNumber, selectedItem.Year); // You get the Id of the selected item here
   }
-  getAllEmployeesList() {
-    this.timeSheetService.getAllEmployeesForManager("a6fb32e4-44dd-7a57-074c-6ff01f7c298b")
-      .subscribe((response: any) => {
-        this.data.push(response);
-        this.Employees = this.data[0];
-      });
+  getAllEmployeesList(UserId: any) {
+    if (UserId == null) {
+      this.timeSheetService.getManagerList()
+        .subscribe((response: any) => {
+          this.data.push(response);
+          console.log(this.data[0]);
+          this.Employees = this.data[0];
+        });
+    }
+    else {
+      this.timeSheetService.getAllEmployeesForManager(UserId)
+        .subscribe((response: any) => {
+          this.data.push(response);
+          this.Employees = this.data[0];
+        });
+    }
   }
 
-  getEmployeeAttendanceData() {
+  getEmployeeAttendanceData(employeeId: string) {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5
+      pageLength: 5, destroy: true,
     };
-    this.timeSheetService.getEmployeeAttendanceDataByEmployeeID(this.employeeId)
+    this.Employeeattendacedata = [];
+    this.timeSheetService.getEmployeeAttendanceDataByEmployeeID(employeeId)
       .subscribe((response: any) => {
         this.Employeeattendacedata.push(response);
         this.dtTrigger.next(0);

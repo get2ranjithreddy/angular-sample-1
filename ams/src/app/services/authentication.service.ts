@@ -11,7 +11,7 @@ import { Login } from '../login/Login.model';
 export class AuthenticationService {
     
      isLoggedIn : boolean = false;
-     successPage : string = 'home';
+     successPage : string = 'dashboard';
     private url = 'http://10.189.129.239//AttendenceMgmt/';
     constructor(
         private router: Router,

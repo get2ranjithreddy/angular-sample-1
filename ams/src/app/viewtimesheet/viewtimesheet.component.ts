@@ -1,20 +1,10 @@
-import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
-import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler/src/core';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {  Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TimesheetService } from '../services/timesheet.service';
 import { Subject } from 'rxjs';
 
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ValidatorFn,
-  AbstractControl
-} from "@angular/forms";
-import { DataTableDirective } from 'angular-datatables'; 
-import { EmployeeWeekAttendances } from './EmployeeWeekAttendances.model';
+import {  FormGroup,  Validators } from "@angular/forms";
 
 declare var $: any;
 
@@ -24,17 +14,16 @@ declare var $: any;
   styleUrls: ['./viewtimesheet.component.css']
 })
 
-export class ViewtimesheetComponent implements OnInit , OnDestroy{
-  // @ViewChild(DataTableDirective, { static: false })
-  // dtElement!: DataTableDirective;
+export class ViewtimesheetComponent implements OnInit, OnDestroy {
+
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   fg: FormGroup;
-  fromdate: string = "";   
-  // datePipeString: any;
+  fromdate: string = '';
+  todate: string = '';
+  employeeId: any = null;
   data: any = [];
-  todate: string = "";
-  timesheetData:  any[] = [];
+  timesheetData: any[] = [];
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private timeSheetService: TimesheetService) {
     this.fg = this.fb.group({
       dateTo: ['', Validators.required],
@@ -57,18 +46,18 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
     }
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     var myCurrentDate = new Date();
     var myPastDate = new Date(myCurrentDate);
     myPastDate.setDate(myPastDate.getDate() - 15);
     this.GetEmployeeAttendanceSummary(myPastDate.toString(), myCurrentDate.toString());
   }
 
-  onSubmit() {        
-    this.GetEmployeeAttendanceSummary(this.fromdate, this.todate);   
-  } 
+  onSubmit() {
+    this.GetEmployeeAttendanceSummary(this.fromdate, this.todate);
+  }
 
-  GetEmployeeAttendanceSummary(myCurrentDate: String, myPastDate: String) {      
+  GetEmployeeAttendanceSummary(myCurrentDate: String, myPastDate: String) {
     this.dtOptions = {};
     this.dtTrigger = new Subject();
     this.dtOptions = {
@@ -76,26 +65,32 @@ export class ViewtimesheetComponent implements OnInit , OnDestroy{
       pageLength: 5
     };
     this.data = [];
-    this.timeSheetService.getGetEmployeeAttendanceSummary("be971494-5677-4960-ac59-fa3acb1aa662", myCurrentDate.toString(), myPastDate.toString())
-      .subscribe((response: any) => {  
-        this.data.push(response);    
-        console.log(this.data);   
-        this.timesheetData = this.data[0].EmployeeWeekAttendances;
+    this.employeeId = localStorage.getItem("Id");
+    this.timeSheetService.getGetEmployeeAttendanceSummary(this.employeeId, myCurrentDate.toString(), myPastDate.toString())
+      .subscribe((response: any) => {
+        this.data.push(response);
+        console.log(this.data);
+        var Role = localStorage.getItem("UserRole");
+        if (Role == "Employee") {
+          this.timesheetData = this.data[0].EmployeeWeekAttendances;
+        }
+        else {
+          this.timesheetData = this.data[0].ManagerWeekAttendances;
+        }
+
         this.dtTrigger.next(0);
-        if(this.timesheetData.length == 0)
-        {        
+        if (this.timesheetData.length == 0) {
           $('#exampleTable_info').hide();
           $('#exampleTable_paginate').hide()
         }
-        else{           
+        else {
           $('#exampleTable_info').show();
           $('#exampleTable_paginate').show();
         }
       });
   }
- 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
+
+  ngOnDestroy(): void {    
     this.dtTrigger.unsubscribe();
   }
 }

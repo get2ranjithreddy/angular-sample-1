@@ -12,102 +12,81 @@ import { Employee } from './employee.mode';
   templateUrl: './addtimesheet.component.html',
   styleUrls: ['./addtimesheet.component.css']
 })
-export class AddtimesheetComponent implements  OnInit {
-  timesheetData:any= new userTimesheet();
+export class AddtimesheetComponent implements OnInit {
+  timesheetData: any = new userTimesheet();
   timesheetForm: FormGroup = new FormGroup({});
-  employee=new Employee();
-  weekData:any=[];
+  employee = new Employee();
+  weekData: any = [];
   options: string[];
-  arryEmployeeDayAttendanceEntries:any=[];
-  IsDisabled:boolean=true;
-  employeeId:string="";
+  arryEmployeeDayAttendanceEntries: any = [];
+  IsDisabled: boolean = true;
+  employeeId?: string = "";
   constructor(
     public fb: FormBuilder,
-    private timeSheetService:TimesheetService,
+    private timeSheetService: TimesheetService,
     private router: Router,
-    private datepipe : DatePipe
-    ) {
-      this.timesheetForm = this.fb.group({
-        Sunday: [''],
-        Monday: ['',[Validators.required]],
-        Tuesday: ['',[Validators.required]],
-        Wednesday: ['',[Validators.required]],
-        Thursday: ['',[Validators.required]],
-        Friday: ['',[Validators.required]],
-        Saturday: ['',[Validators.required]],
-        total: ['',[Validators.required]]
-      });
+    private datepipe: DatePipe
+  ) {
+    this.timesheetForm = this.fb.group({
+      Sunday: [''],
+      Monday: ['', [Validators.required]],
+      Tuesday: ['', [Validators.required]],
+      Wednesday: ['', [Validators.required]],
+      Thursday: ['', [Validators.required]],
+      Friday: ['', [Validators.required]],
+      Saturday: ['', [Validators.required]],
+      total: ['', [Validators.required]]
+    });
     this.options = [
       "Leave",
       "4 hrs",
       "8 hrs"
-
     ];
-  
   }
 
-
-  ngOnInit(): void {
-    this.getEmployeeDeatils();
+  ngOnInit(): void {     
     this.getCurrentWeekData();
-    
-    }
-
-
-
-  // timesheetForm = new FormGroup({
-  //   monday: new FormControl('',[Validators.required ,Validators.pattern("^[0-9]*$")]),
-  //   tuesday: new FormControl('',[Validators.required]),
-  //   wednesday: new FormControl('',[Validators.required]),
-  //   thursday: new FormControl('',[Validators.required]),
-  //   friday: new FormControl('',[Validators.required]),
-  //   total:new FormControl('')
-  // });
-
-  get f(){
+  } 
+  get f() {
     return this.timesheetForm.controls;
   }
 
-  onChange(event: any){
-    
-     let mondayValue= this.timesheetForm.controls["Monday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Monday"].value == '8 hrs' ? 8 : 0;
-     let tuesdayValue= this.timesheetForm.controls["Tuesday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Tuesday"].value == '8 hrs' ? 8 : 0;
-     let wednesdayValue= this.timesheetForm.controls["Wednesday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Wednesday"].value == '8 hrs' ? 8 : 0;
-     let thursdayValue= this.timesheetForm.controls["Thursday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Thursday"].value == '8 hrs' ? 8 : 0;
-     let fridayValue= this.timesheetForm.controls["Friday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Friday"].value == '8 hrs' ? 8 : 0;
-     let saturdayValue= this.timesheetForm.controls["Saturday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Saturday"].value == '8 hrs' ? 8 : 0;
-     let sundayValue= this.timesheetForm.controls["Sunday"].value == '4 hrs' ? 4: this.timesheetForm.controls["Sunday"].value == '8 hrs' ? 8 : 0;
-     let total= mondayValue + tuesdayValue + wednesdayValue + thursdayValue + fridayValue + saturdayValue + sundayValue;
-     this.timesheetForm.controls["total"].setValue(total);
+  onChange(event: any) {
+    let mondayValue = this.timesheetForm.controls["Monday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Monday"].value == '8 hrs' ? 8 : 0;
+    let tuesdayValue = this.timesheetForm.controls["Tuesday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Tuesday"].value == '8 hrs' ? 8 : 0;
+    let wednesdayValue = this.timesheetForm.controls["Wednesday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Wednesday"].value == '8 hrs' ? 8 : 0;
+    let thursdayValue = this.timesheetForm.controls["Thursday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Thursday"].value == '8 hrs' ? 8 : 0;
+    let fridayValue = this.timesheetForm.controls["Friday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Friday"].value == '8 hrs' ? 8 : 0;
+    let saturdayValue = this.timesheetForm.controls["Saturday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Saturday"].value == '8 hrs' ? 8 : 0;
+    let sundayValue = this.timesheetForm.controls["Sunday"].value == '4 hrs' ? 4 : this.timesheetForm.controls["Sunday"].value == '8 hrs' ? 8 : 0;
+    let total = mondayValue + tuesdayValue + wednesdayValue + thursdayValue + fridayValue + saturdayValue + sundayValue;
+    this.timesheetForm.controls["total"].setValue(total);
   }
 
-  getEmployeeDeatils()
-  {
-    let username= "DudleyMacejkovic_Bernhard@gmail.com";
-    let password = "quoieauuie";
-    this.timeSheetService.getEmployeeDeatils(username,password)
-    .subscribe((response:any) => {
-      if(response != null)
-      {
+  // getEmployeeDeatils() {
+  //   let username = "DudleyMacejkovic_Bernhard@gmail.com";
+  //   let password = "quoieauuie";
+  //   this.timeSheetService.getEmployeeDeatils(username, password)
+  //     .subscribe((response: any) => {
+  //       if (response != null) {
 
-      this.employee.Id = response.Id;
-      this.employee.Name = response.Name;
-      this.employee.Email = response.Email;
-      console.log(this.employee);
-      }
-     
-    });
-  }
+  //         this.employee.Id = response.Id;
+  //         this.employee.Name = response.Name;
+  //         this.employee.Email = response.Email;
+  //         console.log(this.employee);
+  //       }
+
+  //     });
+  // }
 
   getCurrentWeekData() {
-    this.employeeId = "1fcb0468-133f-45b0-ab7b-da3fa0340296";
+    this.employeeId = localStorage.getItem("Id")?.toString();
     this.timeSheetService.getCurrentWeekData(this.employeeId)
-      .subscribe((response:any) => {
-       console.log("WeekData",response);
+      .subscribe((response: any) => {
+        console.log("WeekData", response);
         this.weekData.push(response);
         for (var i = 0; i < this.weekData[0].length; i++) {
-          if(this.weekData[0][i].IsWorkingDay)
-          {
+          if (this.weekData[0][i].IsWorkingDay) {
             this.timesheetForm.controls[this.weekData[0][i].Weekday].setValidators([Validators.required]);
             this.timesheetForm.updateValueAndValidity();
           }
@@ -120,38 +99,37 @@ export class AddtimesheetComponent implements  OnInit {
   }
 
   onSubmit() {
-
     this.timesheetData = this.timesheetForm.value;
     var timesheet = new Timesheet();
-    
     for (var i = 0; i < this.weekData[0].length; i++) {
       let date = this.datepipe.transform(this.weekData[0][i].Date, 'MM-dd-yyyy')
       var objEmployeeDayAttendanceEntries =
       {
         Date: date,
         IsWorkingDay: this.weekData[0][i].IsWorkingDay,
-        WorkingHours: this.timesheetForm.controls[this.weekData[0][i].Weekday].value == '4 hrs' ? 4: this.timesheetForm.controls[this.weekData[0][i].Weekday].value == '8 hrs' ? 8 :0
+        WorkingHours: this.timesheetForm.controls[this.weekData[0][i].Weekday].value == '4 hrs' ? 4 : this.timesheetForm.controls[this.weekData[0][i].Weekday].value == '8 hrs' ? 8 : 0
       };
       this.arryEmployeeDayAttendanceEntries.push(objEmployeeDayAttendanceEntries);
-
     }
-   
-    timesheet.EmployeeId = this.employee.Id;
+    var UserId = localStorage.getItem("Id");
+    let Role = localStorage.getItem("UserRole");
+    if (Role == "Employee") {
+      timesheet.EmployeeId = UserId;
+    }
+    else {
+      timesheet.ManagerId = UserId;
+    }
+
     timesheet.WeekAttendance = this.arryEmployeeDayAttendanceEntries;
-    console.log(JSON.stringify(timesheet));
-    //alert(JSON.stringify(timesheet));
+    console.log(JSON.stringify(timesheet));     
     this.timeSheetService.submit(timesheet)
-      .subscribe((response:any) => {
-        //alert(response)
-        this.timesheetForm.reset();
-        alert("Timesheet Added Sucessfully");
+      .subscribe((response: any) => {      
+        this.timesheetForm.reset();         
         this.router.navigate(['/addTimeSheet']);
-      
       });
   }
 
-  cancel()
-  {
+  cancel() {
     this.timesheetForm.reset();
     this.router.navigate(['/addTimeSheet']);
   }

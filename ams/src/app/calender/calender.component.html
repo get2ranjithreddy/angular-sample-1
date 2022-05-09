@@ -5,15 +5,13 @@
       {{ year }}
     </option>
   </select>
-  <select id="monthControl" 
-    (change)="onMonthSelectionChange($event.target)"
-  >
+  <select id="monthControl" (change)="onMonthSelectionChange($event.target)">
     <option value="default" disabled>Select</option>
     <option value="{{month}}" *ngFor="let month of staticMonths">
       {{ month }}
     </option>
   </select>
-  <button type="button" class="btn btn-default" (click)="onSubmitClick($event.target)" >Submit</button> &nbsp;
+  <button type="button" class="btn btn-default" (click)="onSubmitClick($event.target)">Submit</button> &nbsp;
 </div>
 
 <div class="calendar">
@@ -32,16 +30,13 @@
     <div class="day" *ngFor="let day of monthData">
       <div id="{{ day.Id }}">
         <div [ngClass]="{ holiday: !day.IsWorkingDay }">{{ day.LDay }}</div>
-        <div
-          class="calender-entry"
-          *ngIf="
+        <div class="calender-entry" *ngIf="
             day.Description.length > 0 &&
             !(
               day.Weekday.toUpperCase() == 'SUNDAY' ||
               day.Weekday.toUpperCase() == 'SATURDAY'
             )
-          "
-        >
+          ">
           {{ day.Description }}
         </div>
       </div>

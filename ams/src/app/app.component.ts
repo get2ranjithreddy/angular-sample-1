@@ -10,7 +10,6 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   title = 'ams';
   isLoggedIn: boolean = false;
-   
 
   constructor(private authService: AuthenticationService, private router: Router) {
 
@@ -23,15 +22,16 @@ export class AppComponent {
           this.isLoggedIn = false;
         }
       }
+      console.log(this.isLoggedIn);
     });
   }
 
   checkLoggedIn(): void {
     this.isLoggedIn = this.authService.isLoggedIn;
-    if (!this.isLoggedIn) {      
+    if (!this.isLoggedIn) {
       $("#divrouter").hide();
     }
-    else {  
+    else {
       $("#divrouter").show();
     }
   }
