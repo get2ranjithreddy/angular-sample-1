@@ -16,6 +16,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
 import { ChartComponent } from './chart/chart.component'
 import { NgChartsModule } from 'ng2-charts'; 
+import { ChangepasswordComponent } from './changepassword/changepassword.component'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NgChartsModule } from 'ng2-charts';
     LoginComponent,
     LogoutComponent,
     HolidayComponent,
-    ChartComponent
+    ChartComponent,
+    ChangepasswordComponent
   ],
   imports: [
     FormsModule,

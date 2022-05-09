@@ -1,4 +1,8 @@
 <h3>Timesheet Quantity </h3>
+<div class="alert alert-danger alert-dismissible" *ngIf="showErrorMessage">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Alert!</strong>  {{errMessage}}
+</div>
 <div class="row" style="margin-bottom: 5%; margin-top: 2%;">
     <div class="col-md-12">
          <div class="col-md-3"><label>From</label> &nbsp;<input type="date" [(ngModel)]="FromDate"></div>

@@ -18,10 +18,16 @@
           <li><a routerLink="/managerviewTimeSheet" [class.active]="isShowClass" (click)="addClass()" *ngIf="UserRole != 'Employee'">Manager View</a></li>
           <li><a routerLink="/calender" [class.active]="isShowClass" (click)="addClass()">Calender</a></li>
           <li><a routerLink="/holiday" [class.active]="isShowClass" (click)="addClass()">Holiday</a></li>
-          <!-- <li><a routerLink="/dashboard" [class.active]="isShowClass" (click)="addClass()">Charts</a></li> -->
+          <li><a routerLink="/changepassword" [class.active]="isShowClass" (click)="addClass()">Change Password</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-         
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Profile<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Page 1-1</a></li>
+              <li><a href="#">Page 1-2</a></li>
+              <li><a href="#">Page 1-3</a></li>
+            </ul>
+          </li>
            <!-- <li><a routerLink="/login" *ngIf = "!isLoggedIn"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
            <li><a routerLink="/logout" *ngIf = "isLoggedIn"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
