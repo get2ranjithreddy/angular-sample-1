@@ -6,16 +6,24 @@ $(document).ready(function() {
   new $.fn.dataTable.FixedHeader( table );
 } ); -->
 <!-- </script> -->
-<form [formGroup]="fg" novalidate (ngSubmit)="onSubmit()">
-  <label for="period" style="margin-left:10px;"> Period: </label>
-  <br />
-  <input formControlName="dateFrom" type="date" useValueAsDate style="margin-left:10px;" />
-  <input formControlName="dateTo" type="date" useValueAsDate style="margin-left:5px;margin-right:5px;" />
+ 
+<div class="row">
+  <form [formGroup]="fg" novalidate (ngSubmit)="onSubmit()">
+    <div class="col-sm-2"><label style="margin-left:10px;">From</label>
+      <input formControlName="dateFrom" type="date" class="btn btn-default" useValueAsDate style="margin-left:10px;" />
+    </div>
+    <div class="col-sm-2"><label>To</label><br/>
+      <input formControlName="dateTo" type="date" class="btn btn-default" useValueAsDate
+         />
+    </div>
+ 
+      <button type="submit"  class="btn btn-primary" style="margin-top:22px" [disabled]="fg.invalid">Submit</button>
+      <label *ngIf="fg.errors">{{ fg.errors?.dates | json }}</label>
+   
 
-  <button type="submit" style="margin-left:10px;" class="btn btn-primary" [disabled]="fg.invalid">Submit</button>
-  <label *ngIf="fg.errors">{{ fg.errors?.dates | json }}</label>
-
-</form>
+  </form>
+ 
+</div>
 
 <!-- <form >
     <label for="birthday" style="margin-left:10px;"> Period: </label>
@@ -26,9 +34,9 @@ $(document).ready(function() {
     <button type="submit" value="Submit" text="Submit" (click)="flterRecord()" style="margin-left:10px;" class="btn btn-primary">
   Submit</button>
   </form> -->
+<br />
+ 
 
-<div class="container">
-  <h2>Timesheet</h2>
   <table id="exampleTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="row-border hover table-striped table-bordered nowrap">
     <thead>
@@ -48,7 +56,7 @@ $(document).ready(function() {
         <td> {{ timesheet.EndDate | date: 'MM/dd/yyyy' }} </td>
         <td> {{ timesheet.TotalWorkingHours }} </td>
         <td>{{ timesheet.Year}} </td>
-        <td> Approved </td>
+        <td > {{ (timesheet.ApprovedStatus == 'NONE' && (timesheet.MarkedStatus == 'MARKED' ||  timesheet.MarkedStatus == 'REMARKED')) ? 'PENDING' : (timesheet.ApprovedStatus == 'APPROVED' && (timesheet.MarkedStatus == 'MARKED' ||  timesheet.MarkedStatus == 'REMARKED')) ? 'APPROVED' : (timesheet.ApprovedStatus == 'REJECTED' && (timesheet.MarkedStatus == 'MARKED' ||  timesheet.MarkedStatus == 'REMARKED')) ? 'REJECTED' : '-' }} </td>
       </tr>
     </tbody>
     <tbody *ngIf="timesheetData?.length == 0">
@@ -58,4 +66,4 @@ $(document).ready(function() {
     </tbody>
 
   </table>
-</div>
+ 

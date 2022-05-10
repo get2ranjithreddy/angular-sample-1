@@ -10,30 +10,33 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   title = 'ams';
   isLoggedIn: boolean = false;
-
+  CurrentURL : string = '';
   constructor(private authService: AuthenticationService, private router: Router) {
-
     // on route change to '/login', set the variable showHead to false
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url === '/login') {
-          this.isLoggedIn = true;
-        } else {
-          this.isLoggedIn = false;
-        }
-      }
-      console.log(this.isLoggedIn);
-    });
+    // this.router.events.subscribe((event: any) => {
+    //   if (event instanceof NavigationEnd) {
+    //     if (event.url === '/login') {
+    //       this.isLoggedIn = true;
+    //     } else {
+    //       this.isLoggedIn = false;
+    //     }
+    //   }
+    //   console.log(this.isLoggedIn);
+    // });
   }
 
+  ngOnInit(): void { 
+    this.CurrentURL = this.router.url;
+  //  alert(this.CurrentURL);
+    if (this.CurrentURL === '/') {
+      this.isLoggedIn = false;
+    } else {
+      this.isLoggedIn =  true; 
+    }
+    console.log(this.isLoggedIn);
+  }
   checkLoggedIn(): void {
-    this.isLoggedIn = this.authService.isLoggedIn;
-    if (!this.isLoggedIn) {
-      $("#divrouter").hide();
-    }
-    else {
-      $("#divrouter").show();
-    }
+    this.isLoggedIn = this.authService.isLoggedIn;   
   }
 }
 

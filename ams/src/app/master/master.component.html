@@ -12,12 +12,12 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav" >
-          <li><a routerLink="/dashboard"  [class.active]="isShowClass" (click)="addClass()">Dashboard</a></li>
-          <li><a routerLink="/addTimeSheet" [class.active]="isShowClass" (click)="addClass()" *ngIf="UserRole != 'Admin'">Timesheet</a></li>
-          <li><a routerLink="/viewTimeSheet" [class.active]="isShowClass" (click)="addClass()">View Timesheet</a></li>
-          <li><a routerLink="/managerviewTimeSheet" [class.active]="isShowClass" (click)="addClass()" *ngIf="UserRole != 'Employee'">Manager View</a></li>
-          <li><a routerLink="/calender" [class.active]="isShowClass" (click)="addClass()">Calender</a></li>
-          <li><a routerLink="/holiday" [class.active]="isShowClass" (click)="addClass()">Holiday</a></li>
+          <li><a routerLink="/dashboard"  [routerLinkActive]="'active'" *ngIf="UserRole != 'Admin'">Dashboard</a></li>
+          <li><a routerLink="/addTimeSheet"  [routerLinkActive]="'active'"  *ngIf="UserRole != 'Admin'">Timesheet</a></li>
+          <li><a routerLink="/viewTimeSheet"  [routerLinkActive]="'active'" *ngIf="UserRole != 'Admin'">View Timesheet</a></li>
+          <li><a routerLink="/managerviewTimeSheet"  [routerLinkActive]="'active'"   *ngIf="UserRole != 'Employee'">Manager View</a></li>
+          <li><a routerLink="/calender"  [routerLinkActive]="'active'" >Calender</a></li>
+          <li><a routerLink="/holiday" [routerLinkActive]="'active'" *ngIf="UserRole == 'Admin'">Holiday</a></li>
           <!-- <li><a routerLink="/dashboard" [class.active]="isShowClass" (click)="addClass()">Charts</a></li> -->
         </ul>
         <ul class="nav navbar-nav navbar-right">

@@ -13,22 +13,21 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         // not logged in so redirect to login page with the return url
         if (this.authenticationService.isLoggedIn) {
-            let Role = localStorage.getItem("UserRole");
-            if (state.url == '/managerviewTimeSheet') {
-                if (Role == "Manager" || Role == 'Admin') {                     
-                    return true;
-                }
-                else {
-                    alert("You don't have permission to access this page ");
-                    return false;
-                }
-            }
-            
             return true;
         }
+            // let Role = localStorage.getItem("UserRole");
+            // if (state.url == '/managerviewTimeSheet') {
+            //     if (Role == "Manager" || Role == 'Admin') {                     
+            //         return true;
+            //     }
+            //     else {
+            //         alert("You don't have permission to access this page ");
+            //         return false;
+            //     }
+            // } 
         else {
             //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-            this.authenticationService.successPage = state.url;
+            this.authenticationService.successPage = state.url;            
             this.router.navigate(['/login']);
             return false;
         }

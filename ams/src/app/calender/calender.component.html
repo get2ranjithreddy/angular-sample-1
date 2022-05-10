@@ -1,4 +1,4 @@
-<div class="container">
+ 
   <select id="yearControl" (change)="onYearSelectionChange($event.target)">
     <option value="default" disabled>Select</option>
     <option value="{{year}}" *ngFor="let year of staticYears">
@@ -11,9 +11,8 @@
       {{ month }}
     </option>
   </select>
-  <button type="button" class="btn btn-default" (click)="onSubmitClick($event.target)">Submit</button> &nbsp;
-</div>
-
+  <button type="button" class="btn btn-primary" (click)="onSubmitClick($event.target)">Submit</button> &nbsp;
+ 
 <div class="calendar">
   <div class="month-indicator">{{requestedMonth}}</div>
   <div class="day-of-week">
@@ -43,3 +42,4 @@
     </div>
   </div>
 </div>
+ 
