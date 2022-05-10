@@ -8,6 +8,7 @@ import { TimesheetService } from '../services/timesheet.service';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
+  employeeId: string | undefined;
 
   constructor(private timesheetService: TimesheetService, private datepipe: DatePipe) { }
 
@@ -25,12 +26,30 @@ export class ChartComponent implements OnInit {
   barChartPlugins = [];
   totalWorkingHours: any = [];
   barChartData: ChartDataset[] = [];
-  FromDate: Date = new Date();
-  ToDate: Date = new Date();
+  FromDate: string="";
+  ToDate:string="";
   objTotalHours: any;
+  showErrorMessage:boolean=false;
+  errMessage:string='';
 
   Submit() {
-    this.timesheetService.getGetEmployeeAttendanceSummary('1fcb0468-133f-45b0-ab7b-da3fa0340296', this.FromDate.toString(), this.ToDate.toString())
+  
+   if(this.FromDate =='')
+   {
+     this.showErrorMessage=true;
+     this.errMessage="Please select from date";
+   }
+   else if (this.ToDate =='')
+   {
+    this.showErrorMessage=true;
+    this.errMessage="Please select To date";
+   }
+   if(this.FromDate !='' && this.ToDate !='')
+   {
+     this.showErrorMessage=false;
+    this.errMessage ='';
+    this.employeeId = localStorage.getItem("Id")?.toString()
+    this.timesheetService.getGetEmployeeAttendanceSummary(this.employeeId, this.FromDate.toString(), this.ToDate.toString())
       .subscribe((response: any) => {
         if (response.EmployeeWeekAttendances.length > 0) {
           this.showChart = true;
@@ -54,5 +73,6 @@ export class ChartComponent implements OnInit {
         }
 
       });
+    }
   }
 }

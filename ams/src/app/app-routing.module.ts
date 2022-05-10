@@ -9,6 +9,7 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
 import { ChartComponent } from './chart/chart.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
  
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'managerviewTimeSheet', component: ManagerViewTimesheetComponent, canActivate : [AuthGuard]},
   { path: 'login', component: LoginComponent  },
   { path: 'logout', component: LogoutComponent  },
+  { path: 'changepassword', component: ChangepasswordComponent},
   { path: '**', redirectTo: 'dashboard' }
 ];
 

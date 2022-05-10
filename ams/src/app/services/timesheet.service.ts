@@ -16,7 +16,7 @@ export class TimesheetService {
     this.Role = localStorage.getItem("UserRole");
   }
 
-  getGetEmployeeAttendanceSummary(id: string, startDate: string, endDate: string) {
+  getGetEmployeeAttendanceSummary(id?: string, startDate?: string, endDate?: string) {
     this.StartDate = this.datepipe.transform((startDate), 'MM-dd-yyyy');
     this.EndDate = this.datepipe.transform((endDate), 'MM-dd-yyyy');
     this.Role = localStorage.getItem("UserRole");   
