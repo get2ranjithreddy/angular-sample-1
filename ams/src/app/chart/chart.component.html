@@ -1,32 +1,24 @@
-
+<div class="alert alert-danger alert-dismissible" *ngIf="showErrorMessage">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Alert!</strong> {{errMessage}}
+</div>
 <div class="row">
-   
-    <div class="col-sm-2"><label>From</label>&nbsp;&nbsp;
-      <input type="date" [(ngModel)]="FromDate" class="btn btn-default">
-    </div>
-    <div class="col-sm-2" style="margin-left:-20px;"><label>To</label><br/> <input type="date" [(ngModel)]="ToDate" class="btn btn-default"></div>
-    <div  style="margin-top:23px;">
-      <button type="button"  class="btn btn-primary" (click)="Submit()">Submit</button> &nbsp;
-    </div>
+
+  <div class="col-sm-2"><label>From</label>&nbsp;&nbsp;
+    <input type="date" [(ngModel)]="FromDate" class="btn btn-default">
   </div>
- 
+  <div class="col-sm-2" style="margin-left:-20px;"><label>To</label> &nbsp; <input type="date" [(ngModel)]="ToDate"
+      class="btn btn-default"></div>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="Submit()">Submit</button> &nbsp;
+  </div>
+</div>
+
 
 <div class="card mt-2">
   <div class="card-body" id="barchart" *ngIf="showChart">
-    <h4 class="card-title">Bar Chart</h4>
-    <h3 *ngIf="showNoDataAvailable">No Data Available</h3>
+
     <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
       [plugins]="barChartPlugins" [legend]="barChartLegend">
     </canvas>
   </div>
-  <!-- <h4>Pie Chart</h4>
-      <div >
-        <canvas baseChart 
-          [data]="pieChartData" 
-          [labels]="pieChartLabels" 
-        
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]="pieChartLegend">
-        </canvas>
-      </div> -->

@@ -1,4 +1,4 @@
-<h4>Enter Time</h4>
+
 <div class="" style="border:1px solid #cecece;"> 
    <div style="margin-left: 1%; margin-right: 1%;">
     <form [formGroup]="timesheetForm" (ngSubmit)="onSubmit()">
@@ -8,7 +8,7 @@
       <thead>
         <tr  >
           <th scope="col" > Day</th>
-          <th scope="col"  *ngFor="let column of weekData[0]" title="{{column.Description}}" [style.color]="!column.IsWorkingDay?'blue':null">{{ column.Day}} <br>{{ column.Weekday}}</th>
+          <th scope="col"  *ngFor="let column of weekData[0]" title="{{column.Description}}" [style.color]="!column.IsWorkingDay?'green':null">{{ column.Day}} <br>{{ column.Weekday}}</th>
           <th scope="col">Total Hours</th>
         </tr>
       </thead>
