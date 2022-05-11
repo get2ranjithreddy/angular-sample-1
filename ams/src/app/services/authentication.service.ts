@@ -45,7 +45,8 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('Id');    
-        localStorage.removeItem('UserRole');        
+        localStorage.removeItem('UserRole'); 
+        localStorage.removeItem('isLoggedIn')       
         this.router.navigate(['login']);
     }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,33 +11,26 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   title = 'ams';
   isLoggedIn: boolean = false;
-  CurrentURL : string = '';
-  constructor(private authService: AuthenticationService, private router: Router) {
-    // on route change to '/login', set the variable showHead to false
-    // this.router.events.subscribe((event: any) => {
-    //   if (event instanceof NavigationEnd) {
-    //     if (event.url === '/login') {
-    //       this.isLoggedIn = true;
-    //     } else {
-    //       this.isLoggedIn = false;
-    //     }
-    //   }
-    //   console.log(this.isLoggedIn);
-    // });
+  CurrentURL: string = '';
+  constructor(private authService: AuthenticationService, private router: Router, private location: Location) {
+
+    if (location.path() == '/login') {
+      localStorage.removeItem('isLoggedIn');
+    }
+
   }
 
-  ngOnInit(): void { 
-    this.CurrentURL = this.router.url;
-  //  alert(this.CurrentURL);
-    if (this.CurrentURL === '/') {
-      this.isLoggedIn = false;
-    } else {
-      this.isLoggedIn =  true; 
-    }
-    console.log(this.isLoggedIn);
+  ngOnInit(): void {
+
   }
   checkLoggedIn(): void {
-    this.isLoggedIn = this.authService.isLoggedIn;   
+    if (localStorage.getItem('isLoggedIn') == "true") {
+      this.isLoggedIn = true;
+    }
+    else {
+      this.isLoggedIn = false;
+    }
+
   }
 }
 

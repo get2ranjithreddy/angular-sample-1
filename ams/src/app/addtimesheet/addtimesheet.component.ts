@@ -125,7 +125,7 @@ export class AddtimesheetComponent implements OnInit {
     this.timeSheetService.submit(timesheet)
       .subscribe((response: any) => {      
         this.timesheetForm.reset();         
-        this.router.navigate(['/addTimeSheet']);
+        this.router.navigate(['/viewTimeSheet']);
       });
   }
 

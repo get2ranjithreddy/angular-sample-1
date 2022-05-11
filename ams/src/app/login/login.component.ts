@@ -58,8 +58,9 @@ export class LoginComponent implements OnInit {
     }
     else if (this.loginObj.Email == "admin" && this.loginObj.Password == "admin" && this.Role == "Admin") {
       this.authService.isLoggedIn = true;
-      localStorage.setItem('UserRole', this.Role);     
-      this.router.navigate([this.authService.successPage]);
+      localStorage.setItem('UserRole', this.Role); 
+      localStorage.setItem('isLoggedIn', "true");    
+      this.router.navigate(['/managerviewTimeSheet']);
     }
     console.log(this.loginObj);
 
@@ -72,8 +73,9 @@ export class LoginComponent implements OnInit {
             console.log(response);
             localStorage.setItem('Id', response.Id);
             localStorage.setItem('UserRole', this.Role);
+            localStorage.setItem('isLoggedIn', "true");  
             this.authService.isLoggedIn = true;  
-                
+               
             this.router.navigate([this.authService.successPage]);
           }
           else {

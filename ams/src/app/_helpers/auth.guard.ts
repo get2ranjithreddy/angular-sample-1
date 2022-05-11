@@ -11,25 +11,22 @@ export class AuthGuard implements CanActivate {
         private authenticationService: AuthenticationService
     ) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        // not logged in so redirect to login page with the return url
-        if (this.authenticationService.isLoggedIn) {
+        if (this.isLoggedIn()) {
             return true;
         }
-            // let Role = localStorage.getItem("UserRole");
-            // if (state.url == '/managerviewTimeSheet') {
-            //     if (Role == "Manager" || Role == 'Admin') {                     
-            //         return true;
-            //     }
-            //     else {
-            //         alert("You don't have permission to access this page ");
-            //         return false;
-            //     }
-            // } 
-        else {
-            //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-            this.authenticationService.successPage = state.url;            
-            this.router.navigate(['/login']);
-            return false;
+        // navigate to login page as user is not authenticated      
+        this.router.navigate(['/login']);
+        return false;
+    }
+
+    isLoggedIn(): boolean {
+        let status = false;
+        if (localStorage.getItem('isLoggedIn') == "true") {
+            status = true;
         }
+        else {
+            status = false;
+        }
+        return status;
     }
 }
