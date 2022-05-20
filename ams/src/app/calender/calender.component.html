@@ -1,4 +1,4 @@
- 
+
   <select id="yearControl" (change)="onYearSelectionChange($event.target)">
     <option value="default" disabled>Select</option>
     <option value="{{year}}" *ngFor="let year of staticYears">
@@ -12,7 +12,26 @@
     </option>
   </select>
   <button type="button" class="btn btn-primary" (click)="onSubmitClick($event.target)">Submit</button> &nbsp;
- 
+ <div class="divlist" *ngIf="isShow && role=='Admin'" >
+  <div class="date-grid list" >
+    <div [ngClass]="{ hide:i%2!=0 }" *ngFor="let holiday of holidaysList;let i =index;" >
+    <div class="verticalline" >
+      <div *ngIf="i%2== 0">
+       {{ holidaysList[i].Description | uppercase }}<br/>
+        <label class="text" >{{ holidaysList[i].Date | lowercase }}</label>
+      </div>
+     
+    </div>
+    <div class="verticalline" *ngIf="(i+1)%2!=0"></div>
+    <div class="verticalline" *ngIf="(i+1)%2!=0">
+       {{ holidaysList[i+1]?.Description | uppercase }}<br/>
+      <label class="text" >{{ holidaysList[i+1]?.Date | lowercase }}</label>
+    </div>
+
+  </div>
+  <div style="border-right: 4px solid #e55959;height: 100%"></div>
+</div>
+</div>
 <div class="calendar">
   <div class="month-indicator">{{requestedMonth}}</div>
   <div class="day-of-week">
@@ -26,10 +45,18 @@
   </div>
   <div class="date-grid">
     <div class="day" *ngFor="let dummy of dummyDivs"></div>
-    <div class="day" *ngFor="let day of monthData">
+    <div class="day" *ngFor="let day of monthData"  (mouseover)="onMouseOver(day.Id)" (mouseleave)="onMouseOver(day.Id)"> 
       <div id="{{ day.Id }}">
-        <div [ngClass]="{ holiday: !day.IsWorkingDay }">{{ day.LDay }}</div>
-        <div class="calender-entry" *ngIf="
+        <div [ngClass]="{ holiday: !day.IsWorkingDay }">{{ day.LDay }} 
+    
+        </div>
+        <span  *ngIf="role=='Admin' && holidayId ==day.Id && !
+        (day.Weekday.toUpperCase() == 'SUNDAY' || day.Weekday.toUpperCase() == 'SATURDAY')"  style="float: right;">
+        <i class="material-icons" *ngIf="day.Description==''" style="float: right;" (click)="openAddDialog(day.Id, day.Date, day.Description)">add</i>
+        <i  class="material-icons" *ngIf="day.Description!=''" style="float: right;"  (click)="openEditDialog(day.Id, day.Date, day.Description)">edit</i><br/>
+        <i  class="material-icons" *ngIf="day.Description!=''" style="float: right;"   (click)="openDeleteDialog(day.Id, day.Date, day.Description)">delete</i>
+        </span>
+        <div class="calender-entry" style="margin-top: 30%;" *ngIf="
             day.Description.length > 0 &&
             !(
               day.Weekday.toUpperCase() == 'SUNDAY' ||

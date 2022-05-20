@@ -17,12 +17,10 @@
           <li><a routerLink="/viewTimeSheet"  [routerLinkActive]="'active'" *ngIf="UserRole != 'Admin'">View Timesheet</a></li>
           <li><a routerLink="/managerviewTimeSheet"  [routerLinkActive]="'active'"   *ngIf="UserRole != 'Employee'">Manager View</a></li>
           <li><a routerLink="/calender"  [routerLinkActive]="'active'" >Calender</a></li>
-          <li><a routerLink="/holiday" [routerLinkActive]="'active'" *ngIf="UserRole == 'Admin'">Holiday</a></li>
-          <!-- <li><a routerLink="/dashboard" [class.active]="isShowClass" (click)="addClass()">Charts</a></li> -->
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown"><a class="dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton11" aria-expanded="false">Profile<span class="caret"></span></a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton11">
+          <li class="dropdown"><a class="dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false">Profile<span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <!-- <li><a routerLink="/changepassword" [routerLinkActive]="'active'" >Change Password</a></li> -->
               <li><a routerLink="/logout" ><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>

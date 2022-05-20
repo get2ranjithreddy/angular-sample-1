@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class MonthinfoService {
   private url =
-    'http://10.26.238.161/AttendenceMgmt/api/Calender/GetMonthsEntries';
+    'http://10.189.129.239/AttendenceMgmt/api/Calender/GetMonthsEntries';
 
   constructor(private httpClient: HttpClient) {}
 

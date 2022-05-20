@@ -81,3 +81,31 @@
   width: 200px;
   margin-right: 20px;
 }
+
+.verticalline {
+  border-right: 4px solid #e55959;
+  height: 40px;
+}
+
+.text{
+ padding-left: 26%;
+  font-style:italic;
+  padding-top: 1%;
+  font-size: x-small;
+}
+
+.list
+{
+  margin: 3% 0px 3% 9%;
+  text-align: center;;
+}
+
+.divlist
+{
+  margin: 3% 0px 5% 0%;
+  border:4px solid #e55959;
+}
+
+.hide{
+display: none;
+}

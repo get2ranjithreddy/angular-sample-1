@@ -10,12 +10,11 @@ import { LogoutComponent } from './logout/logout.component';
 import { HolidayComponent } from './holiday/holiday.component';
 import { ChartComponent } from './chart/chart.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
- 
 
+ 
 const routes: Routes = [
   { path: 'calender', component: CalenderComponent , canActivate : [AuthGuard]},
   { path: 'addTimeSheet', component: AddtimesheetComponent , canActivate : [AuthGuard]},
-  { path: 'holiday', component: HolidayComponent ,canActivate : [AuthGuard] },
   { path: 'dashboard', component: ChartComponent ,canActivate : [AuthGuard] },
   { path: 'viewTimeSheet', component: ViewtimesheetComponent , canActivate : [AuthGuard]},
   { path: 'managerviewTimeSheet', component: ManagerViewTimesheetComponent, canActivate : [AuthGuard]},

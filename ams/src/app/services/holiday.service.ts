@@ -15,4 +15,14 @@ export class HolidayService {
   submit(post:any){
     return this.httpClient.post(`${this.url}api/Calender/UpdateYearEntries`, post);
 }
+
+addHolidays(post:any){
+  return this.httpClient.post(`${this.url}api/Calender/AddOrUpdateHoliday`, post);
+}
+
+deleteHolidays(date:any){
+  return this.httpClient.get(`${this.url}api/Calender/DeleteHoliday/${date}`);
+}
+
+
 }

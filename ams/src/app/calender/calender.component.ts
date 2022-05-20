@@ -1,5 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { DeletedialogComponent } from '../deletedialog/deletedialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
+import { HolidayService } from '../services/holiday.service';
 import { MonthinfoService } from '../services/monthinfo.service';
 
 @Component({
@@ -16,10 +21,16 @@ export class CalenderComponent implements OnInit {
   activeYear: number = 0;
   activeMonth: number = 0;
   requestedMonth: string = '';
-
-  constructor(private monthinfoService: MonthinfoService) {}
+  role:string='';
+  holidayId: string='';
+  holidaysList:any=[];
+  isShow=false;
+  constructor(private monthinfoService: MonthinfoService,
+    public matDialog: MatDialog, public datepipe: DatePipe,
+    public holidayService: HolidayService) {}
 
   ngOnInit(): void {
+    this.role = localStorage.getItem("UserRole")!;
     var d = new Date();
     this.activeYear = d.getFullYear();
     this.activeMonth = d.getMonth() + 1;
@@ -30,6 +41,12 @@ export class CalenderComponent implements OnInit {
     this.updateCalender(month);
   }
 
+  loadDefaultData()
+  {
+    var month = this.getMonthsData(this.activeYear, this.activeMonth);
+    this.updateCalender(month);
+  }
+ 
   updateCalender(month: any) {
     if (month != null) {
       month.subscribe((response: any) => {
@@ -109,6 +126,24 @@ export class CalenderComponent implements OnInit {
     this.activeYear = Number.parseInt(
       (document.getElementById('yearControl') as HTMLInputElement).value
     );
+    this.holidayService.getYearsData(this.activeYear)
+    .subscribe((response: any) => {
+      if (response != null) {
+        this.holidaysList=[];
+        this.isShow=true;
+        for(var i=0;i<response.length;i++)
+        {
+          var date = new Date(response[i].Date).toLocaleDateString('en-us', { year:"numeric", month:"short", day: 'numeric'});;
+        
+          let obj= {
+            Description:response[i].Description,
+            Date:date
+          }
+          this.holidaysList.push(obj);
+        }
+        
+      }
+    });
   }
 
   onMonthSelectionChange(event: any) {
@@ -125,5 +160,55 @@ export class CalenderComponent implements OnInit {
 
   getMonthsData(year: number, month: number): Observable<any> {
     return this.monthinfoService.getMonthsData(year, month);
+  }
+
+  openAddDialog(id: number, date: string, description: string): void {
+
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      disableClose: true,
+      width: '650px',
+      height: '290px',
+      data: { Id: id, Description: description, Date: this.datepipe.transform(date, 'yyyy-MM-dd') },
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+     
+    });
+  }
+
+  openEditDialog(id: number, date: string, description: string): void {
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      disableClose: true,
+      width: '650px',
+      height: '290px',
+      data: { Id: id, Description: description, Date: this.datepipe.transform(date, 'yyyy-MM-dd') },
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+    
+    });
+  }
+
+  openDeleteDialog(id: number, date: string, description: string): void {
+    const dialogRef = this.matDialog.open(DeletedialogComponent, 
+      {
+      disableClose: true,
+      width: '450px',
+      height: '200px',
+      data: { Id: id, Description: description, Date: this.datepipe.transform(date, 'yyyy-MM-dd') },
+      position: {
+        top: '80px',
+        left: '450px'
+      }
+    });
+    dialogRef.disableClose = true;
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  onMouseOver(id: string) {
+
+    this.holidayId = id;
   }
 }

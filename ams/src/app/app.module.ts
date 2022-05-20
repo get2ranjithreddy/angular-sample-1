@@ -17,6 +17,11 @@ import { HolidayComponent } from './holiday/holiday.component';
 import { ChartComponent } from './chart/chart.component'
 import { NgChartsModule } from 'ng2-charts'; 
 import { ChangepasswordComponent } from './changepassword/changepassword.component'; 
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogComponent } from './dialog/dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DeletedialogComponent } from './deletedialog/deletedialog.component' 
 
 @NgModule({
   declarations: [
@@ -30,8 +35,11 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
     LogoutComponent,
     HolidayComponent,
     ChartComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
+    DialogComponent,
+    DeletedialogComponent
   ],
+
   imports: [
     FormsModule,
     BrowserModule,
@@ -40,9 +48,14 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule,
-    NgChartsModule
+    NgChartsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule
   ],
+  entryComponents: [DialogComponent],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+ 
 })
 export class AppModule { }
